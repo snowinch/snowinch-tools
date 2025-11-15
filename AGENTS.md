@@ -186,6 +186,11 @@ export class MyPackage {
 - **Constants**: UPPER_SNAKE_CASE
 - **Types/Interfaces**: PascalCase
 
+#### Documentation Language
+- **All code comments, documentation, and annotations MUST be in English**
+- This ensures consistency, international collaboration, and better tooling support
+- See [Documentation Requirements](#documentation-requirements) section for details
+
 ---
 
 ## Testing Requirements
@@ -243,6 +248,52 @@ describe('MyPackage', () => {
 ---
 
 ## Documentation Requirements
+
+### Language
+
+**All documentation, comments, and code annotations MUST be written in English.**
+
+This includes:
+- ✅ **JSDoc comments** - All class, method, and parameter documentation
+- ✅ **Inline comments** - Code explanations and TODO notes
+- ✅ **README files** - User-facing documentation
+- ✅ **Error messages** - Exception messages and console logs
+- ✅ **Type descriptions** - TypeScript interface and type comments
+- ✅ **Example code** - Demo snippets and usage examples
+- ✅ **Commit messages** - Git commit descriptions
+- ✅ **Test descriptions** - Test names and assertions
+
+**Why English?**
+- International collaboration and open source contributions
+- Consistency across all packages in the monorepo
+- Better IDE autocomplete and IntelliSense support
+- Accessibility for the wider JavaScript/TypeScript community
+
+**Examples:**
+
+❌ **Bad** (Italian):
+```typescript
+// Invio email giornaliere
+cron.job("send-emails", {
+  schedule: "0 9 * * *", // Ogni giorno alle 9:00
+  handler: async () => {
+    // Simula il caricamento degli utenti
+    const users = await loadUsers();
+  }
+});
+```
+
+✅ **Good** (English):
+```typescript
+// Send daily digest emails
+cron.job("send-emails", {
+  schedule: "0 9 * * *", // Every day at 9:00 AM
+  handler: async () => {
+    // Simulate loading users
+    const users = await loadUsers();
+  }
+});
+```
 
 ### Package README Structure
 
@@ -506,7 +557,7 @@ export class MyPackageError extends Error {
 - Use dependency injection for external dependencies
 - Make packages configurable through options
 - Write comprehensive tests
-- Document all public APIs
+- Document all public APIs in **English** (comments, JSDoc, README)
 - Use TypeScript strict mode
 - Handle errors explicitly
 - Keep packages focused (single responsibility)
@@ -516,6 +567,7 @@ export class MyPackageError extends Error {
 - Create duplicate code across packages
 - Use global state
 - Depend on implementation details of other packages
+- Write documentation or comments in languages other than English
 - Skip tests for "simple" code
 - Use `any` type (use `unknown` if needed)
 - Mutate input parameters

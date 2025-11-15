@@ -1,14 +1,14 @@
 import { ServerlessCron } from "@snowinch-tools/githubcron";
 
 export const cron = new ServerlessCron({
-  name: "example-githubcron", // Nome del gruppo cron → genera "example-githubcron.yml"
+  name: "example-githubcron", // Cron group name → generates "example-githubcron.yml"
   secret: process.env.GITHUBCRON_SECRET,
   baseUrl: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
   baseUrlEnvVar: "GITHUBCRON_APP_URL", // GitHub Actions will use ${{ vars.GITHUBCRON_APP_URL }}
   envVarSource: "vars", // Use GitHub Variables (not Secrets)
   cronPath: "/api/cron",
 
-  // Logging callbacks - in produzione potresti salvare su DB
+  // Logging callbacks - in production you could save to DB
   onJobStart: async (ctx) => {
     console.log(`[CRON START] ${ctx.jobName} - ${ctx.startedAt.toISOString()}`);
   },
@@ -28,9 +28,9 @@ export const cron = new ServerlessCron({
   },
 });
 
-// Job 0: Health check ping (test rapido)
+// Job 0: Health check ping (quick test)
 cron.job("ping", {
-  schedule: "* * * * *", // Ogni minuto (frequenza massima cron)
+  schedule: "* * * * *", // Every minute (max cron frequency)
   description: "Health check ping - test job",
   handler: async (ctx) => {
     console.log("🏓 PING! Server is alive!");
@@ -42,17 +42,17 @@ cron.job("ping", {
   },
 });
 
-// Job 1: Invio email giornaliere
+// Job 1: Send daily digest emails
 cron.job("send-daily-digest", {
-  schedule: "0 9 * * *", // Ogni giorno alle 9:00 AM
+  schedule: "0 9 * * *", // Every day at 9:00 AM
   description: "Send daily digest emails to all users",
   handler: async (ctx) => {
     console.log("📧 Sending daily digest emails...");
 
-    // Simula il caricamento degli utenti
+    // Simulate loading users
     await new Promise((resolve) => setTimeout(resolve, 500));
 
-    // In un caso reale, qui faresti:
+    // In a real case, you would do:
     // const users = await db.user.findMany({ where: { emailVerified: true } });
     // await Promise.all(users.map(user => sendEmail(user)));
 
@@ -64,16 +64,16 @@ cron.job("send-daily-digest", {
   },
 });
 
-// Job 2: Pulizia dati vecchi
+// Job 2: Cleanup old data
 cron.job("cleanup-old-data", {
-  schedule: "0 2 * * 0", // Ogni domenica alle 2:00 AM
+  schedule: "0 2 * * 0", // Every Sunday at 2:00 AM
   description: "Cleanup old data and logs",
   handler: async (ctx) => {
     console.log("🧹 Cleaning up old data...");
 
     await new Promise((resolve) => setTimeout(resolve, 300));
 
-    // In un caso reale:
+    // In a real case:
     // const deleted = await db.logs.deleteMany({
     //   where: { createdAt: { lt: thirtyDaysAgo() } }
     // });
@@ -86,16 +86,16 @@ cron.job("cleanup-old-data", {
   },
 });
 
-// Job 3: Sync dati esterni (multiple schedule)
+// Job 3: Sync external data (multiple schedules)
 cron.job("sync-external-data", {
-  schedule: ["0 */6 * * *", "0 0 * * *"], // Ogni 6 ore + mezzanotte
+  schedule: ["0 */6 * * *", "0 0 * * *"], // Every 6 hours + midnight
   description: "Sync data from external APIs",
   handler: async (ctx) => {
     console.log("🔄 Syncing external data...");
 
     await new Promise((resolve) => setTimeout(resolve, 400));
 
-    // Simula un errore casuale per testare error handling
+    // Simulate random error to test error handling
     if (Math.random() > 0.8) {
       throw new Error("External API timeout");
     }
