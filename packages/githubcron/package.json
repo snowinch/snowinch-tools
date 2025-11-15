@@ -1,0 +1,83 @@
+{
+    "name": "@snowinch-tools/githubcron",
+    "version": "0.0.0",
+    "description": "GitHub Actions powered cron jobs for serverless applications - framework agnostic",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "bin": {
+        "githubcron": "./dist/cli/index.js"
+    },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.js"
+        },
+        "./adapters/nextjs": {
+            "types": "./dist/adapters/nextjs.d.ts",
+            "import": "./dist/adapters/nextjs.mjs",
+            "require": "./dist/adapters/nextjs.js"
+        },
+        "./adapters/express": {
+            "types": "./dist/adapters/express.d.ts",
+            "import": "./dist/adapters/express.mjs",
+            "require": "./dist/adapters/express.js"
+        },
+        "./adapters/fetch": {
+            "types": "./dist/adapters/fetch.d.ts",
+            "import": "./dist/adapters/fetch.mjs",
+            "require": "./dist/adapters/fetch.js"
+        }
+    },
+    "scripts": {
+        "build": "tsup src/index.ts src/adapters/nextjs.ts src/adapters/express.ts src/adapters/fetch.ts src/cli/index.ts --format cjs,esm --dts",
+        "dev": "tsup src/index.ts src/adapters/nextjs.ts src/adapters/express.ts src/adapters/fetch.ts src/cli/index.ts --format cjs,esm --dts --watch",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage",
+        "lint": "eslint src/",
+        "type-check": "tsc --noEmit"
+    },
+    "keywords": [
+        "github-actions",
+        "githubcron",
+        "cron",
+        "serverless",
+        "webhook",
+        "scheduler",
+        "nextjs",
+        "express",
+        "vercel",
+        "typescript"
+    ],
+    "author": "Snowinch",
+    "license": "MIT",
+    "devDependencies": {
+        "@repo/eslint-config": "*",
+        "@repo/typescript-config": "*",
+        "@types/node": "^20.10.0",
+        "@vitest/coverage-v8": "^1.0.0",
+        "tsup": "^8.0.0",
+        "typescript": "^5.3.0",
+        "vitest": "^1.0.0"
+    },
+    "dependencies": {
+        "commander": "^11.1.0",
+        "cron-parser": "^4.9.0",
+        "dotenv": "^16.6.1",
+        "jiti": "^1.21.7"
+    },
+    "peerDependencies": {
+        "express": ">=4.0.0",
+        "next": ">=13.0.0"
+    },
+    "peerDependenciesMeta": {
+        "next": {
+            "optional": true
+        },
+        "express": {
+            "optional": true
+        }
+    }
+}

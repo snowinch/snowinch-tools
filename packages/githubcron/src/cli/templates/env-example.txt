@@ -1,0 +1,8 @@
+# Cron secret token (generate with: openssl rand -hex 32)
+GITHUBCRON_SECRET=your-secret-token-here
+
+# Application URL (used for GitHub workflow generation)
+NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
+# or for Express
+APP_URL=https://your-app.com
+
