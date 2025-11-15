@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "snowinch-tools",
   "private": true,
   "scripts": {
     "build": "turbo run build",
