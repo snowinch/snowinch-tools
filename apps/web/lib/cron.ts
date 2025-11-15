@@ -1,10 +1,10 @@
-import { ServerlessCron } from "@snowinch-tools/cron-serverless";
+import { ServerlessCron } from "@snowinch-tools/githubcron";
 
 export const cron = new ServerlessCron({
   name: "web-app-cron", // Nome del gruppo cron → genera "web-app-cron.yml"
-  secret: process.env.CRON_SECRET,
+  secret: process.env.GITHUBCRON_SECRET,
   baseUrl: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-  baseUrlEnvVar: "APP_URL", // GitHub Actions will use ${{ vars.APP_URL }}
+  baseUrlEnvVar: "GITHUBCRON_APP_URL", // GitHub Actions will use ${{ vars.GITHUBCRON_APP_URL }}
   envVarSource: "vars", // Use GitHub Variables (not Secrets)
   cronPath: "/api/cron",
 

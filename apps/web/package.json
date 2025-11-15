@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
-    "snowcron:dev": "cron-serverless dev --config lib/cron.ts",
-    "snowcron:generate": "cron-serverless generate",
+    "githubcron:dev": "githubcron dev --config lib/cron.ts",
+    "githubcron:generate": "githubcron generate",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --max-warnings 0",
@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@repo/ui": "*",
-    "@snowinch-tools/cron-serverless": "*",
+    "@snowinch-tools/githubcron": "*",
     "next": "^16.0.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
