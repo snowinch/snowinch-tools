@@ -63,60 +63,73 @@ git push origin main
 # All changesets accumulate on main
 ```
 
-### Release Phase (when ready to publish)
+### Release Phase (automatic)
+
+The release happens automatically when changesets are pushed to `main`:
 
 ```bash
-# 1. Create PR: main → production
-# Go to GitHub and create PR from main to production
-# Title: "Release v0.x.0" or similar
+# 1. Push to main with changesets
+git push origin main
 
-# 2. Merge the PR
-# This triggers the automated release process
+# 2. GitHub Actions automatically:
+#    - Creates PR: main → production
+#    - CI runs on the PR
+
+# 3. Merge the PR to production
+
+# 4. Release workflow on production:
+#    - Creates PR "Version Packages"
+
+# 5. Merge "Version Packages" PR
+#    → Auto-publish to npm!
+#    → Backmerge to main
 ```
 
 ### Automated Release Process
 
-When you merge `main` → `production`:
+When you push to `main` (with changesets):
 
-1. **CI Workflow** runs:
-   - ✅ Lints code
-   - ✅ Type checks
-   - ✅ Builds packages
-   - ✅ Runs tests
-
-2. **Release Workflow** runs:
+1. **Prepare Release Workflow** runs on `main`:
    - 🔍 Detects changesets in `.changeset/`
-   - 📝 Creates/updates PR "Version Packages"
-3. **PR "Version Packages"** contains:
-   - Updated `package.json` versions
-   - Updated `CHANGELOG.md` files
-   - All changesets consumed
+   - 📝 Creates PR: `main` → `production`
+   - ✅ CI runs on the PR
 
-4. **When you merge the PR**:
+2. **When you merge the PR to production**:
+   - 🚀 Release workflow triggers on `production`
+
+3. **Release Workflow** creates "Version Packages" PR on `production`:
+   - Updates `package.json` versions
+   - Generates `CHANGELOG.md`
+   - Removes changeset files
+
+4. **When you merge "Version Packages" PR**:
    - 🚀 Packages are automatically published to npm
    - 🏷️ Git tags are created (e.g., `@snowinch/githubcron@0.2.0`)
    - 📝 GitHub releases are created
 
 5. **Automatic Backmerge**:
-   - 🔄 The `backmerge.yml` workflow automatically syncs `production` → `main`
-   - ✅ Ensures `main` has the updated package versions
-   - ✅ Keeps both branches in sync
+   - 🔄 `backmerge.yml` syncs `production` → `main`
+   - ✅ Keeps main updated with published versions
+   - ✅ Ensures consistency across branches
 
 ---
 
 ## 🌳 Branch Strategy
 
-- **`main`**: Development branch (feature branches → main)
-  - Contains new features + changesets
-  - Always ready for release
-  - Protected: Requires CI to pass
+- **`main`**: Development branch
+  - Active development happens here
+  - Feature branches merge here
+  - Changesets accumulate
+  - Auto-creates PR to production when ready
 
-- **`production`**: Release branch (main → production)
-  - Only updated via PR from main
-  - Triggers automated releases
-  - Protected: Requires PR + CI
+- **`production`**: Release branch
+  - Receives PRs from main
+  - Triggers release process
+  - Version bumps happen here
+  - Publishes to npm
+  - Backmerges to main after publish
 
-**Flow**: `feature` → `main` → `production` → npm → backmerge to `main`
+**Flow**: `feature` → `main` → PR to `production` → `production` (publish to npm) → backmerge to `main`
 
 ---
 

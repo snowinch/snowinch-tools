@@ -12,8 +12,8 @@ jobs:
   backmerge:
     name: Sync versions to main
     runs-on: ubuntu-latest
-    # Solo se non è già un merge commit da main
-    if: "!contains(github.event.head_commit.message, 'Merge pull request') || contains(github.event.head_commit.message, 'version packages')"
+    # Solo se è un merge di "version packages"
+    if: "contains(github.event.head_commit.message, 'version packages')"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
