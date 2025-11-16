@@ -2,9 +2,10 @@
 
 ## Project Overview
 
-**snowinch-tools** is a collection of high-quality, reusable utility packages for JavaScript/TypeScript developers. This is a Turborepo monorepo that publishes independent npm packages under the `@snowinch-tools` scope.
+**snowinch-tools** is a collection of high-quality, reusable utility packages for JavaScript/TypeScript developers. This is a Turborepo monorepo that publishes independent npm packages under the `@snowinch` scope.
 
 ### Core Philosophy
+
 - **Zero duplication**: Never create multiple versions of the same file
 - **Reusability first**: All code must be reusable and modular
 - **Class-oriented**: Packages expose instantiable classes with clear APIs
@@ -41,6 +42,7 @@ snowinch-tools/
 ## Technology Stack
 
 ### Core Tools
+
 - **Monorepo**: Turborepo
 - **Package Manager**: npm (NOT bun for this project)
 - **Language**: TypeScript (strict mode enabled)
@@ -50,6 +52,7 @@ snowinch-tools/
 - **Linting**: ESLint with shared configs
 
 ### Build Targets
+
 - **Output formats**: ESM and CommonJS
 - **TypeScript**: Always export `.d.ts` type definitions
 - **Target**: ES2020 minimum
@@ -63,7 +66,7 @@ snowinch-tools/
 When creating a new package in `packages/`:
 
 1. **Naming**: Use kebab-case (e.g., `html-to-pdf`, `cron-serverless`)
-2. **Scope**: Always use `@snowinch-tools/package-name` in package.json
+2. **Scope**: Always use `@snowinch/package-name` in package.json
 3. **Structure**: Follow this exact structure:
 
 ```
@@ -86,7 +89,7 @@ packages/your-package/
 
 ```json
 {
-  "name": "@snowinch-tools/package-name",
+  "name": "@snowinch/package-name",
   "version": "0.0.0",
   "description": "Brief description",
   "main": "./dist/index.js",
@@ -112,8 +115,8 @@ packages/your-package/
   "author": "Snowinch",
   "license": "MIT",
   "devDependencies": {
-    "@snowinch-tools/typescript-config": "workspace:*",
-    "@snowinch-tools/eslint-config": "workspace:*",
+    "@snowinch/typescript-config": "workspace:*",
+    "@snowinch/eslint-config": "workspace:*",
     "tsup": "^latest",
     "vitest": "^latest",
     "@vitest/coverage-v8": "^latest",
@@ -125,20 +128,23 @@ packages/your-package/
 ### 3. Code Style and Architecture
 
 #### Class-Oriented Pattern
+
 Every package must:
+
 - Export a main class that can be instantiated
 - Be configurable through constructor options
 - Follow single responsibility principle
 - Use TypeScript strict mode
 
 **Example**:
-```typescript
+
+````typescript
 // src/index.ts
-export { MyPackage } from './MyPackage';
-export type { MyPackageOptions, MyPackageResult } from './types';
+export { MyPackage } from "./MyPackage";
+export type { MyPackageOptions, MyPackageResult } from "./types";
 
 // src/MyPackage.ts
-import type { MyPackageOptions, MyPackageResult } from './types';
+import type { MyPackageOptions, MyPackageResult } from "./types";
 
 /**
  * MyPackage - Brief description
@@ -170,15 +176,17 @@ export class MyPackage {
     // implementation
   }
 }
-```
+````
 
 #### Code Reusability
+
 - **NEVER duplicate code** between packages
 - If multiple packages need the same utility, create a shared internal package
 - Extract common logic into private methods
-- Consider creating a `@snowinch-tools/core` package for shared utilities
+- Consider creating a `@snowinch/core` package for shared utilities
 
 #### Naming Conventions
+
 - **Packages**: kebab-case (`html-to-pdf`)
 - **Classes**: PascalCase (`HtmlToPdf`)
 - **Files**: PascalCase for classes (`HtmlToPdf.ts`), camelCase for utilities (`parseOptions.ts`)
@@ -187,6 +195,7 @@ export class MyPackage {
 - **Types/Interfaces**: PascalCase
 
 #### Documentation Language
+
 - **All code comments, documentation, and annotations MUST be in English**
 - This ensures consistency, international collaboration, and better tooling support
 - See [Documentation Requirements](#documentation-requirements) section for details
@@ -196,41 +205,43 @@ export class MyPackage {
 ## Testing Requirements
 
 ### Test Coverage
+
 - **Minimum**: 90% coverage for most packages
 - **Critical packages**: Aim for 95%+ coverage
 - Use `vitest run --coverage` to check
 
 ### Test Structure
+
 ```typescript
 // tests/MyPackage.test.ts
-import { describe, it, expect, beforeEach } from 'vitest';
-import { MyPackage } from '../src/MyPackage';
+import { describe, it, expect, beforeEach } from "vitest";
+import { MyPackage } from "../src/MyPackage";
 
-describe('MyPackage', () => {
+describe("MyPackage", () => {
   let instance: MyPackage;
 
   beforeEach(() => {
     instance = new MyPackage();
   });
 
-  describe('constructor', () => {
-    it('should initialize with default options', () => {
+  describe("constructor", () => {
+    it("should initialize with default options", () => {
       expect(instance).toBeDefined();
     });
 
-    it('should accept custom options', () => {
-      const custom = new MyPackage({ option: 'custom' });
+    it("should accept custom options", () => {
+      const custom = new MyPackage({ option: "custom" });
       expect(custom).toBeDefined();
     });
   });
 
-  describe('process', () => {
-    it('should process input correctly', async () => {
-      const result = await instance.process('test');
+  describe("process", () => {
+    it("should process input correctly", async () => {
+      const result = await instance.process("test");
       expect(result).toBeDefined();
     });
 
-    it('should handle errors gracefully', async () => {
+    it("should handle errors gracefully", async () => {
       await expect(instance.process(null)).rejects.toThrow();
     });
   });
@@ -238,6 +249,7 @@ describe('MyPackage', () => {
 ```
 
 ### Testing Best Practices
+
 - Test both success and error cases
 - Test edge cases and boundary conditions
 - Use descriptive test names
@@ -254,6 +266,7 @@ describe('MyPackage', () => {
 **All documentation, comments, and code annotations MUST be written in English.**
 
 This includes:
+
 - ✅ **JSDoc comments** - All class, method, and parameter documentation
 - ✅ **Inline comments** - Code explanations and TODO notes
 - ✅ **README files** - User-facing documentation
@@ -264,6 +277,7 @@ This includes:
 - ✅ **Test descriptions** - Test names and assertions
 
 **Why English?**
+
 - International collaboration and open source contributions
 - Consistency across all packages in the monorepo
 - Better IDE autocomplete and IntelliSense support
@@ -272,6 +286,7 @@ This includes:
 **Examples:**
 
 ❌ **Bad** (Italian):
+
 ```typescript
 // Invio email giornaliere
 cron.job("send-emails", {
@@ -279,11 +294,12 @@ cron.job("send-emails", {
   handler: async () => {
     // Simula il caricamento degli utenti
     const users = await loadUsers();
-  }
+  },
 });
 ```
 
 ✅ **Good** (English):
+
 ```typescript
 // Send daily digest emails
 cron.job("send-emails", {
@@ -291,7 +307,7 @@ cron.job("send-emails", {
   handler: async () => {
     // Simulate loading users
     const users = await loadUsers();
-  }
+  },
 });
 ```
 
@@ -300,14 +316,14 @@ cron.job("send-emails", {
 Every package must have a comprehensive README.md:
 
 ```markdown
-# @snowinch-tools/package-name
+# @snowinch/package-name
 
 Brief description of what the package does and why it exists.
 
 ## Installation
 
 \`\`\`bash
-npm install @snowinch-tools/package-name
+npm install @snowinch/package-name
 \`\`\`
 
 ## Features
@@ -321,11 +337,11 @@ npm install @snowinch-tools/package-name
 ### Basic Example
 
 \`\`\`typescript
-import { MyPackage } from '@snowinch-tools/package-name';
+import { MyPackage } from '@snowinch/package-name';
 
 const instance = new MyPackage({
-  option1: 'value1',
-  option2: true
+option1: 'value1',
+option2: true
 });
 
 const result = await instance.process('input');
@@ -362,6 +378,7 @@ new MyPackage(options?: MyPackageOptions)
 Method description.
 
 **Parameters:**
+
 - `input` (string): Input description
 
 **Returns:** Promise<MyPackageResult>
@@ -373,7 +390,7 @@ Method description.
 This package includes TypeScript definitions. All types are exported:
 
 \`\`\`typescript
-import type { MyPackageOptions, MyPackageResult } from '@snowinch-tools/package-name';
+import type { MyPackageOptions, MyPackageResult } from '@snowinch/package-name';
 \`\`\`
 
 ## License
@@ -385,10 +402,10 @@ MIT
 
 All public methods and classes must have JSDoc comments:
 
-```typescript
+````typescript
 /**
  * Class description
- * 
+ *
  * @example
  * ```typescript
  * const instance = new MyClass();
@@ -397,12 +414,12 @@ All public methods and classes must have JSDoc comments:
 export class MyClass {
   /**
    * Method description
-   * 
+   *
    * @param input - Parameter description
    * @param options - Optional parameters
    * @returns Return value description
    * @throws {Error} When something goes wrong
-   * 
+   *
    * @example
    * ```typescript
    * const result = instance.method('input');
@@ -412,7 +429,7 @@ export class MyClass {
     // implementation
   }
 }
-```
+````
 
 ---
 
@@ -422,9 +439,11 @@ export class MyClass {
 
 1. **Make changes** to a package
 2. **Create a changeset**:
+
    ```bash
    npx changeset
    ```
+
    - Select which packages changed
    - Choose semver bump (major/minor/patch)
    - Write a summary of changes
@@ -432,9 +451,11 @@ export class MyClass {
 3. **Commit changeset** with your code
 
 4. **Version packages**:
+
    ```bash
    npx changeset version
    ```
+
    - Updates package.json versions
    - Generates CHANGELOG.md
 
@@ -447,6 +468,7 @@ export class MyClass {
 ### Semantic Versioning
 
 Follow [semver](https://semver.org/):
+
 - **MAJOR** (1.0.0 → 2.0.0): Breaking changes
 - **MINOR** (1.0.0 → 1.1.0): New features, backward compatible
 - **PATCH** (1.0.0 → 1.0.1): Bug fixes, backward compatible
@@ -503,7 +525,7 @@ turbo build
 turbo test
 
 # Run specific task
-turbo run build --filter=@snowinch-tools/package-name
+turbo run build --filter=@snowinch/package-name
 ```
 
 ---
@@ -513,9 +535,10 @@ turbo run build --filter=@snowinch-tools/package-name
 ### TypeScript Configuration
 
 Always use strict mode:
+
 ```json
 {
-  "extends": "@snowinch-tools/typescript-config/base.json",
+  "extends": "@snowinch/typescript-config/base.json",
   "compilerOptions": {
     "strict": true,
     "noUncheckedIndexedAccess": true,
@@ -533,9 +556,12 @@ Always use strict mode:
 
 ```typescript
 export class MyPackageError extends Error {
-  constructor(message: string, public readonly code: string) {
+  constructor(
+    message: string,
+    public readonly code: string,
+  ) {
     super(message);
-    this.name = 'MyPackageError';
+    this.name = "MyPackageError";
   }
 }
 ```
@@ -594,6 +620,7 @@ When working on this codebase as an AI agent:
 ### Before Creating a New Package
 
 Ask yourself:
+
 - Does this solve a real developer problem?
 - Is there similar functionality in existing packages?
 - Can this be combined with another package?
@@ -602,6 +629,7 @@ Ask yourself:
 ### Before Implementing a Feature
 
 Ask yourself:
+
 - Is this the most reusable approach?
 - Am I duplicating any existing code?
 - How will users configure this?
@@ -615,6 +643,7 @@ Ask yourself:
 ### Questions or Issues
 
 When encountering issues:
+
 1. Check existing package documentation
 2. Look at similar packages for patterns
 3. Review test files for usage examples
@@ -623,6 +652,7 @@ When encountering issues:
 ### Adding New Patterns
 
 If you discover a new pattern that should be documented:
+
 1. Document it in the appropriate section
 2. Add examples
 3. Update existing packages to follow the pattern (if applicable)
@@ -632,22 +662,26 @@ If you discover a new pattern that should be documented:
 ## Future Roadmap
 
 ### Phase 1: Foundation (Current)
+
 - ✅ Setup monorepo structure
 - ✅ Configure tooling (tsup, vitest, changesets)
 - ✅ Create AGENTS.md
 - ⏳ Develop initial utility packages
 
 ### Phase 2: Expansion
+
 - Add more utility packages based on needs
-- Create `@snowinch-tools/core` for shared utilities
+- Create `@snowinch/core` for shared utilities
 - Improve testing infrastructure
 
 ### Phase 3: Documentation
+
 - Build documentation site in `apps/docs`
 - Create interactive playground in `apps/web`
 - Add automated API docs generation
 
 ### Phase 4: Community
+
 - Open source release
 - Contribution guidelines
 - Community feedback integration
@@ -656,4 +690,3 @@ If you discover a new pattern that should be documented:
 
 **Last Updated**: 2025-11-15
 **Maintained By**: Snowinch Team
-

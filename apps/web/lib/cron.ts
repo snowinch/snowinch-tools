@@ -1,4 +1,4 @@
-import { ServerlessCron } from "@snowinch-tools/githubcron";
+import { ServerlessCron } from "@snowinch/githubcron";
 
 export const cron = new ServerlessCron({
   name: "example-githubcron", // Cron group name → generates "example-githubcron.yml"
@@ -16,14 +16,14 @@ export const cron = new ServerlessCron({
   onJobComplete: async (ctx) => {
     console.log(
       `[CRON SUCCESS] ${ctx.jobName} - Duration: ${ctx.duration}ms`,
-      ctx.result
+      ctx.result,
     );
   },
 
   onJobError: async (ctx) => {
     console.error(
       `[CRON ERROR] ${ctx.jobName} - ${ctx.error?.message}`,
-      ctx.error
+      ctx.error,
     );
   },
 });

@@ -7,9 +7,11 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
+    "test": "turbo run test",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo run build && changeset publish",
+    "release": "turbo run build && changeset publish --provenance",
+    "release:dry-run": "turbo run build && changeset publish --dry-run",
     "prepare": "husky"
   },
   "devDependencies": {

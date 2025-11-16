@@ -1,10 +1,10 @@
-# @snowinch-tools/githubcron
+# @snowinch/githubcron
 
 ## 0.1.0
 
 ### Minor Changes
 
-- Initial release of @snowinch-tools/githubcron
+- Initial release of @snowinch/githubcron
 
   Features:
   - GitHub Actions powered cron jobs for serverless applications

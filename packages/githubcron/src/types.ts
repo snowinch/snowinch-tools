@@ -1,5 +1,5 @@
 /**
- * Type definitions for @snowinch-tools/githubcron
+ * Type definitions for @snowinch/githubcron
  */
 
 /**
@@ -26,7 +26,7 @@ export interface JobContext {
  * Job handler function signature
  */
 export type JobHandler = (
-  context: Omit<JobContext, "duration" | "result" | "error">
+  context: Omit<JobContext, "duration" | "result" | "error">,
 ) => Promise<any> | any;
 
 /**
@@ -38,7 +38,7 @@ export type OnJobStartCallback = (context: JobContext) => Promise<void> | void;
  * Lifecycle callback for job completion
  */
 export type OnJobCompleteCallback = (
-  context: JobContext
+  context: JobContext,
 ) => Promise<void> | void;
 
 /**
@@ -107,7 +107,7 @@ export interface ServerlessCronOptions {
   /** Custom logger function */
   logger?: (
     message: string,
-    level: "info" | "warn" | "error" | "debug"
+    level: "info" | "warn" | "error" | "debug",
   ) => void;
 }
 
@@ -159,7 +159,7 @@ export class ServerlessCronError extends Error {
   constructor(
     message: string,
     public readonly code: string,
-    public readonly statusCode: number = 500
+    public readonly statusCode: number = 500,
   ) {
     super(message);
     this.name = "ServerlessCronError";

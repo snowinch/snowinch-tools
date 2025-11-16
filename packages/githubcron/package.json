@@ -1,5 +1,5 @@
 {
-  "name": "@snowinch-tools/githubcron",
+  "name": "@snowinch/githubcron",
   "version": "0.1.0",
   "description": "GitHub Actions powered cron jobs for serverless applications - framework agnostic",
   "main": "./dist/index.js",

@@ -1,0 +1,18 @@
+# npm Configuration Example
+# Copy this to .npmrc and configure as needed
+
+# npm registry (default)
+registry=https://registry.npmjs.org/
+
+# For GitHub Packages (optional)
+# @snowinch:registry=https://npm.pkg.github.com/
+
+# Access level for publishing (configured in package.json)
+access=public
+
+# Save exact versions (no ^ or ~)
+save-exact=true
+
+# Engine strict (enforce node version)
+engine-strict=true
+

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * CLI for @snowinch-tools/githubcron
+ * CLI for @snowinch/githubcron
  */
 
 import { Command } from "commander";
@@ -23,7 +23,7 @@ program
   .option(
     "-f, --framework <framework>",
     "Framework to use (nextjs-app, nextjs-pages, express, fetch)",
-    "nextjs-app"
+    "nextjs-app",
   )
   .option("-d, --dir <directory>", "Output directory", ".")
   .action(initCommand);
@@ -34,33 +34,33 @@ program
   .option(
     "-c, --config <path>",
     "Path to cron configuration file",
-    "./lib/cron.ts"
+    "./lib/cron.ts",
   )
   .option(
     "-o, --output <path>",
     "Output path for workflow file",
-    ".github/workflows/cron-jobs.yml"
+    ".github/workflows/cron-jobs.yml",
   )
   .action(generateCommand);
 
 program
   .command("dev")
   .description(
-    "Start local cron worker for development (simulates GitHub Actions)"
+    "Start local cron worker for development (simulates GitHub Actions)",
   )
   .option(
     "-c, --config <path>",
     "Path to cron configuration file",
-    "./lib/cron.ts"
+    "./lib/cron.ts",
   )
   .option(
     "-u, --base-url <url>",
     "Base URL for local development",
-    "http://localhost:3000"
+    "http://localhost:3000",
   )
   .option(
     "-s, --secret <secret>",
-    "Secret token (or use GITHUBCRON_SECRET env)"
+    "Secret token (or use GITHUBCRON_SECRET env)",
   )
   .action(devCommand);
 
@@ -70,7 +70,7 @@ program
   .option(
     "-c, --config <path>",
     "Path to cron configuration file",
-    "./lib/cron.ts"
+    "./lib/cron.ts",
   )
   .option("-s, --secret <secret>", "Secret token for authentication")
   .action(testCommand);

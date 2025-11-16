@@ -37,7 +37,7 @@ fi
 
 # Single package - we can auto-generate
 PACKAGE_NAME=$(echo "$PACKAGES" | head -1)
-FULL_PACKAGE_NAME="@snowinch-tools/${PACKAGE_NAME}"
+FULL_PACKAGE_NAME="@snowinch/${PACKAGE_NAME}"
 
 echo "🔄 Auto-generating changeset for ${FULL_PACKAGE_NAME}..."
 echo ""

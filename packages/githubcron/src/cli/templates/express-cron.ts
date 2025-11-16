@@ -1,4 +1,4 @@
-import { ServerlessCron } from "@snowinch-tools/githubcron";
+import { ServerlessCron } from "@snowinch/githubcron";
 
 export const cron = new ServerlessCron({
   secret: process.env.GITHUBCRON_SECRET!,

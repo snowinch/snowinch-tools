@@ -1,5 +1,5 @@
 /**
- * @snowinch-tools/githubcron
+ * @snowinch/githubcron
  *
  * GitHub Actions powered cron jobs for serverless applications
  * Framework-agnostic with adapters for Next.js, Express, and Fetch API

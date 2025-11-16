@@ -1,8 +1,8 @@
 ---
-"@snowinch-tools/githubcron": minor
+"@snowinch/githubcron": minor
 ---
 
-Initial release of @snowinch-tools/githubcron
+Initial release of @snowinch/githubcron
 
 Features:
 
