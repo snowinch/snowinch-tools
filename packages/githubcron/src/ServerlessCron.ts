@@ -384,6 +384,7 @@ jobs:${jobs.join("")}
     } else if (this.options.debug || level === "error") {
       // Will log to console.error if level is error, otherwise to console.log
       const prefix = `[ServerlessCron:${level.toUpperCase()}]`;
+      // Set the console color based on the level
       console[level === "error" ? "error" : "log"](prefix, message);
     }
   }
