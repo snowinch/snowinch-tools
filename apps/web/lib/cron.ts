@@ -32,7 +32,7 @@ export const cron = new ServerlessCron({
 cron.job("ping", {
   schedule: "* * * * *", // Every minute (max cron frequency)
   description: "Health check ping - test job",
-  handler: async (ctx) => {
+  handler: async (_ctx) => {
     console.log("🏓 PING! Server is alive!");
     return {
       status: "ok",
@@ -46,7 +46,7 @@ cron.job("ping", {
 cron.job("send-daily-digest", {
   schedule: "0 9 * * *", // Every day at 9:00 AM
   description: "Send daily digest emails to all users",
-  handler: async (ctx) => {
+  handler: async (_ctx) => {
     console.log("📧 Sending daily digest emails...");
 
     // Simulate loading users
@@ -68,7 +68,7 @@ cron.job("send-daily-digest", {
 cron.job("cleanup-old-data", {
   schedule: "0 2 * * 0", // Every Sunday at 2:00 AM
   description: "Cleanup old data and logs",
-  handler: async (ctx) => {
+  handler: async (_ctx) => {
     console.log("🧹 Cleaning up old data...");
 
     await new Promise((resolve) => setTimeout(resolve, 300));
@@ -90,7 +90,7 @@ cron.job("cleanup-old-data", {
 cron.job("sync-external-data", {
   schedule: ["0 */6 * * *", "0 0 * * *"], // Every 6 hours + midnight
   description: "Sync data from external APIs",
-  handler: async (ctx) => {
+  handler: async (_ctx) => {
     console.log("🔄 Syncing external data...");
 
     await new Promise((resolve) => setTimeout(resolve, 400));
