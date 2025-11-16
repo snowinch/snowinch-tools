@@ -22,7 +22,7 @@ import { FetchAdapter } from "./adapters/fetch";
 
 /**
  * ServerlessCron orchestrator
- *
+ * Helper class to manage cron jobs and generate GitHub Actions workflows
  * @example
  * ```typescript
  * const cron = new ServerlessCron({

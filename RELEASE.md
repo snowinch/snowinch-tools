@@ -44,7 +44,7 @@ Check that these files exist:
 
 ## 🔄 Release Workflow
 
-### Development Phase
+### Development Phase (on `main` branch)
 
 ```bash
 # 1. Make changes to a package
@@ -56,32 +56,80 @@ git commit -m "feat: add retry mechanism"
 # → Pre-commit hook creates changeset automatically
 # → You just choose type (patch/minor/major) and description
 
-# 3. Push to GitHub
-git push origin production
+# 3. Push to main
+git push origin main
+
+# 4. Repeat for more features/fixes during the week
+# All changesets accumulate on main
+```
+
+### Release Phase (automatic)
+
+The release happens automatically when changesets are pushed to `main`:
+
+```bash
+# 1. Push to main with changesets
+git push origin main
+
+# 2. GitHub Actions automatically:
+#    - Creates PR: main → production
+#    - CI runs on the PR
+
+# 3. Merge the PR to production
+
+# 4. Release workflow on production:
+#    - Creates PR "Version Packages"
+
+# 5. Merge "Version Packages" PR
+#    → Auto-publish to npm!
+#    → Backmerge to main
 ```
 
 ### Automated Release Process
 
-When you push to `production`:
+When you push to `main` (with changesets):
 
-1. **CI Workflow** runs:
-   - ✅ Lints code
-   - ✅ Type checks
-   - ✅ Builds packages
-   - ✅ Runs tests
-
-2. **Release Workflow** runs:
+1. **Prepare Release Workflow** runs on `main`:
    - 🔍 Detects changesets in `.changeset/`
-   - 📝 Creates/updates PR "Version Packages"
-3. **PR "Version Packages"** contains:
-   - Updated `package.json` versions
-   - Updated `CHANGELOG.md` files
-   - All changesets consumed
+   - 📝 Creates PR: `main` → `production`
+   - ✅ CI runs on the PR
 
-4. **When you merge the PR**:
+2. **When you merge the PR to production**:
+   - 🚀 Release workflow triggers on `production`
+
+3. **Release Workflow** creates "Version Packages" PR on `production`:
+   - Updates `package.json` versions
+   - Generates `CHANGELOG.md`
+   - Removes changeset files
+
+4. **When you merge "Version Packages" PR**:
    - 🚀 Packages are automatically published to npm
    - 🏷️ Git tags are created (e.g., `@snowinch/githubcron@0.2.0`)
    - 📝 GitHub releases are created
+
+5. **Automatic Backmerge**:
+   - 🔄 `backmerge.yml` syncs `production` → `main`
+   - ✅ Keeps main updated with published versions
+   - ✅ Ensures consistency across branches
+
+---
+
+## 🌳 Branch Strategy
+
+- **`main`**: Development branch
+  - Active development happens here
+  - Feature branches merge here
+  - Changesets accumulate
+  - Auto-creates PR to production when ready
+
+- **`production`**: Release branch
+  - Receives PRs from main
+  - Triggers release process
+  - Version bumps happen here
+  - Publishes to npm
+  - Backmerges to main after publish
+
+**Flow**: `feature` → `main` → PR to `production` → `production` (publish to npm) → backmerge to `main`
 
 ---
 
