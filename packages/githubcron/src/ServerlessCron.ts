@@ -114,7 +114,7 @@ export class ServerlessCron {
       throw new ServerlessCronError(
         `Job "${name}" already exists`,
         "DUPLICATE_JOB",
-        500
+        500,
       );
     }
 
@@ -128,7 +128,7 @@ export class ServerlessCron {
         throw new ServerlessCronError(
           `Invalid cron expression: ${schedule}`,
           "INVALID_CRON_EXPRESSION",
-          500
+          500,
         );
       }
     }
@@ -136,7 +136,7 @@ export class ServerlessCron {
     this.jobs.set(name, definition);
     this.log(
       `Job "${name}" registered with schedule: ${schedules.join(", ")}`,
-      "info"
+      "info",
     );
   }
 
@@ -198,7 +198,7 @@ export class ServerlessCron {
         throw new ServerlessCronError(
           `Job "${jobName}" not found`,
           "JOB_NOT_FOUND",
-          404
+          404,
         );
       }
 
@@ -229,7 +229,7 @@ export class ServerlessCron {
 
         this.log(
           `Job "${jobName}" completed successfully in ${completeContext.duration}ms`,
-          "info"
+          "info",
         );
 
         return {
@@ -245,7 +245,7 @@ export class ServerlessCron {
         const errorContext = errorJobContext(
           context,
           error instanceof Error ? error : new Error(String(error)),
-          startTime
+          startTime,
         );
 
         // Execute onJobError callback
@@ -255,7 +255,7 @@ export class ServerlessCron {
 
         this.log(
           `Job "${jobName}" failed: ${errorContext.error?.message}`,
-          "error"
+          "error",
         );
 
         throw error;
@@ -294,7 +294,7 @@ export class ServerlessCron {
       throw new ServerlessCronError(
         "Either baseUrl or baseUrlEnvVar is required to generate GitHub workflow",
         "MISSING_BASE_URL",
-        500
+        500,
       );
     }
 
@@ -377,11 +377,12 @@ jobs:${jobs.join("")}
    */
   private log(
     message: string,
-    level: "info" | "warn" | "error" | "debug"
+    level: "info" | "warn" | "error" | "debug",
   ): void {
     if (this.options.logger) {
       this.options.logger(message, level);
     } else if (this.options.debug || level === "error") {
+      // Will log to console.error if level is error, otherwise to console.log
       const prefix = `[ServerlessCron:${level.toUpperCase()}]`;
       console[level === "error" ? "error" : "log"](prefix, message);
     }
