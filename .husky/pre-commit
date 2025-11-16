@@ -1,0 +1,5 @@
+# Check if changeset is required
+.husky/check-changeset.sh
+
+# Run lint-staged
+npx lint-staged
