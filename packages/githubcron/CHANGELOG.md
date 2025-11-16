@@ -1,5 +1,11 @@
 # @snowinch/githubcron
 
+## 0.2.1
+
+### Patch Changes
+
+- b8b8c25: Added comment on code line
+
 ## 0.2.0
 
 ### Minor Changes
