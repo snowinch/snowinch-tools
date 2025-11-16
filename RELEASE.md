@@ -57,12 +57,12 @@ git commit -m "feat: add retry mechanism"
 # → You just choose type (patch/minor/major) and description
 
 # 3. Push to GitHub
-git push origin main
+git push origin production
 ```
 
 ### Automated Release Process
 
-When you push to `main`:
+When you push to `production`:
 
 1. **CI Workflow** runs:
    - ✅ Lints code
