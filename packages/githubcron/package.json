@@ -53,6 +53,15 @@
   ],
   "author": "Snowinch",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/snowinch/snowinch-tools.git",
+    "directory": "packages/githubcron"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
