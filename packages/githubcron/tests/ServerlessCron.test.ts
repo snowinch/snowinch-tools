@@ -22,10 +22,11 @@ describe("ServerlessCron", () => {
       expect(cron.fetch).toBeDefined();
     });
 
-    it("should throw error if secret is missing", () => {
+    it("should allow secret to be optional during initialization", () => {
+      // Secret is optional during initialization, validated at runtime
       expect(() => {
         new ServerlessCron({} as any);
-      }).toThrow(ServerlessCronError);
+      }).not.toThrow();
     });
 
     it("should use default values for optional options", () => {
@@ -180,7 +181,7 @@ describe("ServerlessCron", () => {
         expect.objectContaining({
           jobName: "test-job",
           startedAt: expect.any(Date),
-        })
+        }),
       );
     });
 
@@ -207,7 +208,7 @@ describe("ServerlessCron", () => {
           jobName: "test-job",
           result: { result: "success" },
           duration: expect.any(Number),
-        })
+        }),
       );
     });
 
@@ -236,7 +237,7 @@ describe("ServerlessCron", () => {
           jobName: "failing-job",
           error: expect.any(Error),
           duration: expect.any(Number),
-        })
+        }),
       );
     });
   });
@@ -254,7 +255,9 @@ describe("ServerlessCron", () => {
       expect(workflow).toContain("name: Serverless Cron Jobs");
       expect(workflow).toContain("cron: '0 9 * * *'");
       expect(workflow).toContain("https://test-app.com/api/cron/daily-job");
-      expect(workflow).toContain("X-Cron-Secret: ${{ secrets.CRON_SECRET }}");
+      expect(workflow).toContain(
+        "X-Cron-Secret: ${{ secrets.GITHUBCRON_SECRET }}",
+      );
     });
 
     it("should throw error if baseUrl is missing", () => {
