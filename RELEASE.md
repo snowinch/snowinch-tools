@@ -44,7 +44,7 @@ Check that these files exist:
 
 ## 🔄 Release Workflow
 
-### Development Phase
+### Development Phase (on `main` branch)
 
 ```bash
 # 1. Make changes to a package
@@ -56,13 +56,27 @@ git commit -m "feat: add retry mechanism"
 # → Pre-commit hook creates changeset automatically
 # → You just choose type (patch/minor/major) and description
 
-# 3. Push to GitHub
-git push origin production
+# 3. Push to main
+git push origin main
+
+# 4. Repeat for more features/fixes during the week
+# All changesets accumulate on main
+```
+
+### Release Phase (when ready to publish)
+
+```bash
+# 1. Create PR: main → production
+# Go to GitHub and create PR from main to production
+# Title: "Release v0.x.0" or similar
+
+# 2. Merge the PR
+# This triggers the automated release process
 ```
 
 ### Automated Release Process
 
-When you push to `production`:
+When you merge `main` → `production`:
 
 1. **CI Workflow** runs:
    - ✅ Lints code
@@ -82,6 +96,27 @@ When you push to `production`:
    - 🚀 Packages are automatically published to npm
    - 🏷️ Git tags are created (e.g., `@snowinch/githubcron@0.2.0`)
    - 📝 GitHub releases are created
+
+5. **Automatic Backmerge**:
+   - 🔄 The `backmerge.yml` workflow automatically syncs `production` → `main`
+   - ✅ Ensures `main` has the updated package versions
+   - ✅ Keeps both branches in sync
+
+---
+
+## 🌳 Branch Strategy
+
+- **`main`**: Development branch (feature branches → main)
+  - Contains new features + changesets
+  - Always ready for release
+  - Protected: Requires CI to pass
+
+- **`production`**: Release branch (main → production)
+  - Only updated via PR from main
+  - Triggers automated releases
+  - Protected: Requires PR + CI
+
+**Flow**: `feature` → `main` → `production` → npm → backmerge to `main`
 
 ---
 

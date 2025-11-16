@@ -1,0 +1,35 @@
+name: Backmerge Production to Main
+
+on:
+  push:
+    branches:
+      - production
+    # Solo quando viene aggiornato package.json (dopo release)
+    paths:
+      - 'packages/*/package.json'
+
+jobs:
+  backmerge:
+    name: Sync versions to main
+    runs-on: ubuntu-latest
+    # Solo se non è già un merge commit da main
+    if: "!contains(github.event.head_commit.message, 'Merge pull request') || contains(github.event.head_commit.message, 'version packages')"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT }}
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Backmerge to main
+        run: |
+          git fetch origin main
+          git checkout main
+          git merge origin/production --no-edit -m "chore: sync versions from production [skip ci]"
+          git push origin main
+
